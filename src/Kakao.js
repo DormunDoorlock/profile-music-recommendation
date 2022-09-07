@@ -20,10 +20,10 @@ export default function Kakao() {
 
   const getProfileImage = useCallback(() => {
     window.Kakao.API.request({
-      url: "/v2/user/me",
+      url: "/v1/api/talk/profile",
       success: function (response) {
         console.log(response);
-        setProfileImage(response.kakao_account.profile.profile_image_url);
+        setProfileImage(response.profileImageURL);
       },
       fail: function (error) {
         console.log(error);
