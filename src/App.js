@@ -1,5 +1,6 @@
 import React from "react";
+import Kakao from "./Kakao";
 
 export default function App() {
-  return <div>Profile Music Recommendation</div>;
+  return <Kakao />;
 }
