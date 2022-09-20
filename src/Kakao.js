@@ -48,7 +48,7 @@ export default function Kakao() {
       const y = canvas.height / 2 - (image.height / 2) * scale;
       context.drawImage(image, x, y, image.width * scale, image.height * scale);
     };
-  });
+  }, [profileImage]);
 
   return (
     <div>
