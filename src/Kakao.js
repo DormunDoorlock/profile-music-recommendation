@@ -6,8 +6,8 @@ export default function Kakao() {
 
   const handleKakaoLogin = useCallback(() => {
     window.Kakao.Auth.login({
-      success: function (response) {
-        console.log(response);
+      success: function () {
+        getProfileImage();
       },
       fail: function (error) {
         console.log(error);
@@ -54,7 +54,6 @@ export default function Kakao() {
     <div>
       <div onClick={handleKakaoLogin}>카카오 로그인</div>
       <div onClick={handleKakaoLogout}>카카오 로그아웃</div>
-      <div onClick={getProfileImage}>프로필 사진 가져오기</div>
       <canvas ref={canvasRef} width={640} height={640} />
     </div>
   );
