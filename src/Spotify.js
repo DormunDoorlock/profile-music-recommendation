@@ -1,32 +1,19 @@
-import React, { useCallback, useEffect } from "react";
-import SpotifyWebApi from "spotify-web-api-js";
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
 
-const spotifyApi = new SpotifyWebApi();
-
-export default function Spotify() {
-  const [isInitialized, setIsInitialized] = React.useState(false);
-
-  const initializeSpotify = useCallback(() => {
-    fetch("https://accounts.spotify.com/api/token", {
+export default function Spotify({ expressions }) {
+  const getRecommendedMusicList = useCallback(() => {
+    fetch("https://480ytpc372.execute-api.ap-northeast-2.amazonaws.com/dev/handler/musicRmd", {
       method: "POST",
-      headers: {
-        Authorization: `Basic ${window.btoa(
-          process.env.REACT_APP_SPOTIFY_CLIENT_ID +
-            ":" +
-            process.env.REACT_APP_SPOTIFY_CLIENT_SECRET
-        )}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "grant_type=client_credentials",
+      body: JSON.stringify(expressions),
     })
       .then((response) => response.json())
-      .then(({ access_token }) => spotifyApi.setAccessToken(access_token))
-      .then(() => setIsInitialized(true));
+      .then((data) => console.log(data));
   }, []);
 
-  useEffect(() => {
-    isInitialized || initializeSpotify();
-  });
-
-  return;
+  return <div onClick={getRecommendedMusicList}>Get Recommended Music List</div>;
 }
+
+Spotify.propTypes = {
+  expressions: PropTypes.object.isRequired,
+};
