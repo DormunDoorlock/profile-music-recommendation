@@ -1,0 +1,9 @@
+musicRec:
+  handler: handler.musicRec
+  layers:
+    - ${self:custom.commonLayer}
+  events:
+    - http:
+        path: handler/musicRec
+        method: post
+        cors: true

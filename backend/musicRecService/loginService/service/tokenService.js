@@ -9,7 +9,7 @@ const getKakaoAccessToken = async params => {
         try {
             const {code} = params
             const url = 'https://kauth.kakao.com/oauth/token'
-            const rest_api_key = '0a51bdb828bef0a5807eba75ffb8fa59'
+            const rest_api_key = ''
             const redirect_uri= 'http://localhost:3000/login'
             const data = {
                 client_id: rest_api_key,
@@ -63,7 +63,7 @@ const getKakaoToken = async params => {
     return new Promise(async (resolve, reject) => {
         try {
             const { refreshToken } = params
-            const rest_api_key = '01bfe1e7333de48dcc9a0a6ef41b1a06'
+            const rest_api_key = ''
             const data = {
                 client_id: rest_api_key,
                 refresh_token: refreshToken,

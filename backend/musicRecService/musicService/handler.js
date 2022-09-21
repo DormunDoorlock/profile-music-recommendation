@@ -1,18 +1,26 @@
 'use strict';
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+const musicRecService = require('./service/recService')
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+let headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+}
+
+module.exports.musicRec = async event => {
+  try {
+    let result
+    result = await musicRecService.musicRec(event)
+    return{
+      statusCode: 200,
+      headers,
+      body: JSON.stringify(result)
+    }
+  } catch (error) {
+    const err = {
+      statusCode: 400,
+      body: JSON.stringify(error)
+    }
+    return err
+  }
 };
