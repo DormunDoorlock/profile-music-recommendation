@@ -1,0 +1,25 @@
+service: musicRecService-layer
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-2
+  stage: ${opt:stage, 'dev'}
+  lambdaHashingVersion: 20201221
+  environment:
+    STAGE: ${opt:stage, 'dev'}
+
+layers:
+  common:
+    path: lib
+    name: musicRecService-layer-${self:provider.stage}
+    allowedAccounts:
+      - '*'
+
+resources:
+  Outputs:
+    CommonLayerExport:
+      Value:
+        Ref: CommonLambdaLayer
+      Export:
+        Name: MCommonLambdaLayer-${self:provider.stage}
