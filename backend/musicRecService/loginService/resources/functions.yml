@@ -1,0 +1,9 @@
+logIn:
+  handler: handler.logIn
+  layers:
+    - ${self:custom.commonLayer}
+  events:
+    - http: 
+        path: handler/login
+        method: post
+        cors: true

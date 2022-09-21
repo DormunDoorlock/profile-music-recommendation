@@ -1,0 +1,22 @@
+service: loginService
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  stage: ${self:custom.stage}
+  region: ap-northeast-2
+  environment:
+    STAGE: ${self:custom.stage}
+    REGION: ${self:provider.region}
+    NODE_PATH: './:/opt/node_modules'
+
+custom:
+  stage: ${opt:stage, 'dev'}  
+  authorizer: aws_iam
+  commonLayer: ${cf:musicRecService-layer-${self:custom.stage}.CommonLayerExport}
+
+functions:
+  - ${file(resources/functions.yml)}
+
