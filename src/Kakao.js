@@ -5,13 +5,9 @@ export default function Kakao() {
   const [profileImage, setProfileImage] = useState("");
 
   const handleKakaoLogin = useCallback(() => {
-    window.Kakao.Auth.login({
-      success: function () {
-        getProfileImage();
-      },
-      fail: function (error) {
-        console.log(error);
-      },
+    window.Kakao.Auth.authorize({
+      redirectUri: "http://localhost:3000/login",
+      prompts: "login",
     });
   }, []);
 
@@ -20,16 +16,12 @@ export default function Kakao() {
   }, []);
 
   const getProfileImage = useCallback(() => {
-    window.Kakao.API.request({
-      url: "/v1/api/talk/profile",
-      success: function (response) {
-        console.log(response);
-        setProfileImage(response.profileImageURL);
-      },
-      fail: function (error) {
-        console.log(error);
-      },
-    });
+    fetch("https://1k6jwmoqb0.execute-api.ap-northeast-2.amazonaws.com/dev/handler/login", {
+      method: "POST",
+      body: JSON.stringify({ code: new URL(window.location.href).searchParams.get("code") }),
+    })
+      .then((response) => response.json())
+      .then((data) => setProfileImage(data.profile));
   }, []);
 
   useEffect(() => {
@@ -54,6 +46,7 @@ export default function Kakao() {
     <div>
       <div onClick={handleKakaoLogin}>카카오 로그인</div>
       <div onClick={handleKakaoLogout}>카카오 로그아웃</div>
+      <div onClick={getProfileImage}>프로필 사진 불러오기</div>
       <canvas ref={canvasRef} width={640} height={640} />
     </div>
   );
