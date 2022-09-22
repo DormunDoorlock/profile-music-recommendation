@@ -23,7 +23,7 @@ export default function Face({ setExpressions }) {
     faceapi.draw.drawFaceExpressions(canvas, detections);
   }, []);
 
-  return <div onClick={detectFace}>Detect Face</div>;
+  return <button onClick={detectFace}>얼굴 인식 &amp; 감정 분석</button>;
 }
 
 Face.propTypes = {
