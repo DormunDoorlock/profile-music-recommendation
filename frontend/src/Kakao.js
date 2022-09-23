@@ -1,18 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-export default function Kakao() {
-  const canvasRef = useRef(null);
+export default function Kakao({ canvasRef }) {
   const [profileImage, setProfileImage] = useState("");
 
   const handleKakaoLogin = useCallback(() => {
     window.Kakao.Auth.authorize({
       redirectUri: "http://localhost:3000/login",
-      prompts: "login",
     });
-  }, []);
-
-  const handleKakaoLogout = useCallback(() => {
-    window.Kakao.Auth.logout();
   }, []);
 
   const getProfileImage = useCallback(() => {
@@ -26,7 +21,12 @@ export default function Kakao() {
 
   useEffect(() => {
     window.Kakao.isInitialized() || window.Kakao.init(process.env.REACT_APP_KAKAO_KEY);
-  });
+  }, []);
+
+  useEffect(() => {
+    new URL(window.location.href).searchParams.get("code") && getProfileImage();
+    history.replaceState(null, null, "/");
+  }, [getProfileImage]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -43,11 +43,12 @@ export default function Kakao() {
   }, [profileImage]);
 
   return (
-    <div>
-      <div onClick={handleKakaoLogin}>카카오 로그인</div>
-      <div onClick={handleKakaoLogout}>카카오 로그아웃</div>
-      <div onClick={getProfileImage}>프로필 사진 불러오기</div>
-      <canvas ref={canvasRef} width={640} height={640} />
-    </div>
+    <button style={{ marginRight: 20 }} onClick={handleKakaoLogin}>
+      카카오 로그인
+    </button>
   );
 }
+
+Kakao.propTypes = {
+  canvasRef: PropTypes.object.isRequired,
+};

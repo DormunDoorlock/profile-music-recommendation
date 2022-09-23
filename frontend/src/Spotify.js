@@ -15,29 +15,31 @@ export default function Spotify({ expressions }) {
 
   return (
     <>
-      <div onClick={getRecommendedMusicList}>Get Recommended Music List</div>
-      <table>
-        <thead>
-          <tr>
-            <th>제목</th>
-            <th>아티스트</th>
-            <th>링크</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tracks.map((track) => (
-            <tr key={track.id}>
-              <td>{track.name}</td>
-              <td>{track.artists[0].name}</td>
-              <td>
-                <a href={track.external_urls.spotify} target="_blank" rel="noreferrer">
-                  링크
-                </a>
-              </td>
+      <button onClick={getRecommendedMusicList}>프로필 뮤직 추천 받기</button>
+      {tracks.length > 0 && (
+        <table style={{ marginLeft: "auto", marginRight: "auto" }}>
+          <thead>
+            <tr>
+              <th>제목</th>
+              <th>아티스트</th>
+              <th>링크</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tracks.map((track) => (
+              <tr key={track.id}>
+                <td>{track.name}</td>
+                <td>{track.artists[0].name}</td>
+                <td>
+                  <a href={track.external_urls.spotify} target="_blank" rel="noreferrer">
+                    링크
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 }
