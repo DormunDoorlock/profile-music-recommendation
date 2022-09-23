@@ -17,7 +17,7 @@ export default function Spotify({ expressions }) {
     <>
       <button onClick={getRecommendedMusicList}>프로필 뮤직 추천 받기</button>
       {tracks.length > 0 && (
-        <table>
+        <table style={{ marginLeft: "auto", marginRight: "auto" }}>
           <thead>
             <tr>
               <th>제목</th>

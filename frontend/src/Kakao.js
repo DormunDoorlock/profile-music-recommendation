@@ -42,7 +42,11 @@ export default function Kakao({ canvasRef }) {
     };
   }, [profileImage]);
 
-  return <button onClick={handleKakaoLogin}>카카오 로그인</button>;
+  return (
+    <button style={{ marginRight: 20 }} onClick={handleKakaoLogin}>
+      카카오 로그인
+    </button>
+  );
 }
 
 Kakao.propTypes = {

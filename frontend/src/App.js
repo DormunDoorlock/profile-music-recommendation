@@ -8,13 +8,13 @@ export default function App() {
   const [expressions, setExpressions] = React.useState({});
 
   return (
-    <>
+    <div style={{ textAlign: "center" }}>
       <div>
         <canvas ref={canvasRef} width={640} height={640} />
       </div>
       <Kakao canvasRef={canvasRef} />
       <Face setExpressions={setExpressions} />
       <Spotify expressions={expressions} />
-    </>
+    </div>
   );
 }
