@@ -92,7 +92,7 @@ const getKakaoUserInfo = async params => {
         try {
             const {token} = params
             await axios({
-                url : 'https://kapi.kakao.com/v2/user/me',
+                url : 'https://kapi.kakao.com/v1/api/talk/profile',
                 method: 'get',
                 headers: {
                     'Authorization': 'Bearer '+token
