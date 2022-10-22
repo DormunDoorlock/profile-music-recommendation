@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-export default function Kakao({ canvasRef }) {
+export default function Kakao({ canvasRef, stage, setStage }) {
   const [profileImage, setProfileImage] = useState("");
 
   const handleKakaoLogin = useCallback(() => {
@@ -11,16 +11,23 @@ export default function Kakao({ canvasRef }) {
   }, []);
 
   const getProfileImage = useCallback(() => {
-    fetch("https://1k6jwmoqb0.execute-api.ap-northeast-2.amazonaws.com/dev/handler/login", {
-      method: "POST",
-      body: JSON.stringify({ code: new URL(window.location.href).searchParams.get("code") }),
-    })
+    fetch(
+      "https://1k6jwmoqb0.execute-api.ap-northeast-2.amazonaws.com/dev/handler/login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          code: new URL(window.location.href).searchParams.get("code"),
+        }),
+      }
+    )
       .then((response) => response.json())
-      .then((data) => setProfileImage(data.profile));
+      .then((data) => setProfileImage(data.profile))
+      .then(() => setStage(1));
   }, []);
 
   useEffect(() => {
-    window.Kakao.isInitialized() || window.Kakao.init(process.env.REACT_APP_KAKAO_KEY);
+    window.Kakao.isInitialized() ||
+      window.Kakao.init(process.env.REACT_APP_KAKAO_KEY);
   }, []);
 
   useEffect(() => {
@@ -35,7 +42,10 @@ export default function Kakao({ canvasRef }) {
     image.src = profileImage;
     image.crossOrigin = "anonymous";
     image.onload = () => {
-      const scale = Math.min(canvas.width / image.width, canvas.height / image.height);
+      const scale = Math.min(
+        canvas.width / image.width,
+        canvas.height / image.height
+      );
       const x = canvas.width / 2 - (image.width / 2) * scale;
       const y = canvas.height / 2 - (image.height / 2) * scale;
       context.drawImage(image, x, y, image.width * scale, image.height * scale);
@@ -43,7 +53,11 @@ export default function Kakao({ canvasRef }) {
   }, [profileImage]);
 
   return (
-    <button style={{ marginRight: 20 }} onClick={handleKakaoLogin}>
+    <button
+      style={{ marginRight: 20 }}
+      disabled={stage !== 0}
+      onClick={handleKakaoLogin}
+    >
       카카오 로그인
     </button>
   );
@@ -51,4 +65,6 @@ export default function Kakao({ canvasRef }) {
 
 Kakao.propTypes = {
   canvasRef: PropTypes.object.isRequired,
+  stage: PropTypes.number.isRequired,
+  setStage: PropTypes.func.isRequired,
 };

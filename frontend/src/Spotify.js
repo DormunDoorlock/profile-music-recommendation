@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 
-export default function Spotify({ expressions }) {
+export default function Spotify({ stage, expressions }) {
   const [tracks, setTracks] = useState([]);
 
   const getRecommendedMusicList = useCallback(() => {
@@ -18,7 +18,9 @@ export default function Spotify({ expressions }) {
 
   return (
     <>
-      <button onClick={getRecommendedMusicList}>프로필 뮤직 추천 받기</button>
+      <button disabled={stage != 2} onClick={getRecommendedMusicList}>
+        프로필 뮤직 추천 받기
+      </button>
       {tracks.length > 0 && (
         <table style={{ marginLeft: "auto", marginRight: "auto" }}>
           <thead>
@@ -52,5 +54,6 @@ export default function Spotify({ expressions }) {
 }
 
 Spotify.propTypes = {
+  stage: PropTypes.number.isRequired,
   expressions: PropTypes.object.isRequired,
 };

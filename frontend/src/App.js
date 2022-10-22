@@ -5,6 +5,7 @@ import Face from "./Face";
 
 export default function App() {
   const canvasRef = useRef(null);
+  const [stage, setStage] = useState(0);
   const [expressions, setExpressions] = useState({});
 
   return (
@@ -12,9 +13,9 @@ export default function App() {
       <div>
         <canvas ref={canvasRef} width={640} height={640} />
       </div>
-      <Kakao canvasRef={canvasRef} />
-      <Face setExpressions={setExpressions} />
-      <Spotify expressions={expressions} />
+      <Kakao canvasRef={canvasRef} stage={stage} setStage={setStage} />
+      <Face stage={stage} setStage={setStage} setExpressions={setExpressions} />
+      <Spotify stage={stage} expressions={expressions} />
     </div>
   );
 }
