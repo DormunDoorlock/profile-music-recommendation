@@ -17,11 +17,10 @@ export default function Face({ setExpressions }) {
       .detectSingleFace(canvas)
       .withFaceLandmarks()
       .withFaceExpressions();
-    console.log(detections);
-    setExpressions(detections.expressions);
+    setExpressions({ ...detections.expressions });
     faceapi.draw.drawDetections(canvas, detections);
     faceapi.draw.drawFaceExpressions(canvas, detections);
-  }, []);
+  }, [setExpressions]);
 
   return (
     <button style={{ marginRight: 20 }} onClick={detectFace}>

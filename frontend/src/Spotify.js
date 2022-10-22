@@ -5,13 +5,16 @@ export default function Spotify({ expressions }) {
   const [tracks, setTracks] = useState([]);
 
   const getRecommendedMusicList = useCallback(() => {
-    fetch("https://avi5pau41d.execute-api.ap-northeast-2.amazonaws.com/dev/handler/musicRec", {
-      method: "POST",
-      body: JSON.stringify(expressions),
-    })
+    fetch(
+      "https://avi5pau41d.execute-api.ap-northeast-2.amazonaws.com/dev/handler/musicRec",
+      {
+        method: "POST",
+        body: JSON.stringify(expressions),
+      }
+    )
       .then((response) => response.json())
       .then((data) => setTracks(data.tracks));
-  }, []);
+  }, [expressions]);
 
   return (
     <>
@@ -31,7 +34,11 @@ export default function Spotify({ expressions }) {
                 <td>{track.name}</td>
                 <td>{track.artists[0].name}</td>
                 <td>
-                  <a href={track.external_urls.spotify} target="_blank" rel="noreferrer">
+                  <a
+                    href={track.external_urls.spotify}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     링크
                   </a>
                 </td>

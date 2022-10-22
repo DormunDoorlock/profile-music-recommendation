@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Kakao from "./Kakao";
 import Spotify from "./Spotify";
 import Face from "./Face";
 
 export default function App() {
   const canvasRef = useRef(null);
-  const [expressions, setExpressions] = React.useState({});
+  const [expressions, setExpressions] = useState({});
 
   return (
     <div style={{ textAlign: "center" }}>
